@@ -3,11 +3,11 @@
 {% block content %}
 <h2>Question {{ question_id + 1 }} of {{ survey.questions|length }}</h2>
 <p>{{ question.question }}</p>
-<form action="" method="POST">
+<form action="{{ url_for('handle_answer') }}" method="POST">
     {% for choice in question.choices %}
     <label>
         <input type="radio" name="answer" value="{{ choice }}" required>
-        {{choice}}
+        {{ choice }}
     </label>
     {% endfor %}
     <button type="submit">Next</button>
