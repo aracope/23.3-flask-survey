@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>{{ instructions }}</p>
+<a href="{{ url_for('show_question', question_id=0) }}">
+    <button>Start Survey</button>
+</a>
+{% endblock %}
