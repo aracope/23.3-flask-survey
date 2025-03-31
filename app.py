@@ -15,15 +15,19 @@ def start_page():
     # Render the survey start page with instructions and title
     return render_template('start.html', title=title, instructions=instructions)
 
-
 @app.route("/questions/<int:question_id>")
 def show_question(question_id):
     """ Show the current question. """
-    if question_id != len(responses):
+    # Ensure the question_id is within a valid range
+    if question_id < len(responses):
+        # if the user tries to access a question they've already answered, redirected
         return redirect(url_for("show_question", question_id=len(responses)))
     
+    # If user tries to access a question after the last, redirect to thank you page.
+    if question_id >= len(satisfaction_survey.questions):
+        return redirect(url_for("thank_you"))
+    
     question = satisfaction_survey.questions[question_id]
-
     return render_template("question.html", question=question, question_id=question_id, survey=satisfaction_survey)
 
 @app.route("/answer", methods=["POST"])
@@ -40,6 +44,7 @@ def handle_answer():
 def thank_you():
     """Show completion message"""
     return render_template("thanks.html")
+
 
 
 if __name__=="__main__":
